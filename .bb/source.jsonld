@@ -1,0 +1,65 @@
+{
+  "@context": "../../context/source.context.jsonld",
+  "@type": "dcat:Dataset",
+  "@id": "https://biobricks.ai/bricks/eutoxrisk-temposeq",
+  "dcterms:title": "EU-ToxRisk TempO-Seq gene expression data (with WikiPathways pathways)",
+  "dcterms:description": "The 'eutoxrisk-temposeq' brick builds a tabular dataset from EU-ToxRisk TempO-Seq targeted RNA-sequencing gene-expression data retrieved from the EdelweissData platform (api.develop.edelweiss.douglasconnect.com, Douglas Connect; published dataset id d8922983-1724-4ce8-af07-93f290d9c3c2, filtered to 'EUT' EU-ToxRisk files), combined with pathway data: the WikiPathways gene set (WikiPathway_2023_Human) obtained via the Enrichr geneSetLibrary endpoint at maayanlab.cloud. The EU-ToxRisk source data has no license statement in the repository or on the (development) EdelweissData API endpoint.",
+  "dcterms:license": [
+    {
+      "@id": "UNSTATED",
+      "dcterms:title": "EU-ToxRisk TempO-Seq data from EdelweissData carries no stated license"
+    },
+    "https://creativecommons.org/publicdomain/zero/1.0/"
+  ],
+  "dcterms:creator": "EU-ToxRisk consortium (via Douglas Connect / EdelweissData); WikiPathways",
+  "dcterms:publisher": "Douglas Connect (EdelweissData); WikiPathways",
+  "dcterms:identifier": "EdelweissData dataset id d8922983-1724-4ce8-af07-93f290d9c3c2",
+  "biobricks:licenseName": "UNSTATED (EU-ToxRisk TempO-Seq via EdelweissData) + CC0 1.0 (WikiPathways)",
+  "biobricks:licenseClass": "unknown",
+  "biobricks:merckCommercialUse": "prohibited",
+  "biobricks:licenseEvidence": [
+    {
+      "source": "stages/01_download.py",
+      "quote": "api = API('https://api.develop.edelweiss.douglasconnect.com') ... dataset = api.get_published_dataset(id='d8922983-1724-4ce8-af07-93f290d9c3c2', version='latest') ... datasets[datasets['Filename'].str.contains(filter_word)]  # filter_word = \"EUT\"",
+      "confidence": "high"
+    },
+    {
+      "source": "README.md",
+      "quote": "This repository build a tabular brick using: - EUToxRisk TempO-Seq Data retrieved from [EdelweissData](https://edelweissdata.com). - Pathways Data retrieved from [WikiPathways](https://www.wikipathways.org).",
+      "confidence": "high"
+    },
+    {
+      "source": "stages/01_download.py",
+      "quote": "r = requests.get(\"https://maayanlab.cloud/Enrichr/geneSetLibrary?mode=text&libraryName=WikiPathway_2023_Human\")",
+      "confidence": "high"
+    },
+    {
+      "source": "https://www.edelweissdata.com",
+      "quote": "No license or terms-of-use statement for the EU-ToxRisk TempO-Seq dataset could be retrieved from the EdelweissData site or the development API endpoint used by the download stage; the repository states no license.",
+      "confidence": "medium"
+    }
+  ],
+  "biobricks:reviewed": false,
+  "biobricks:reviewNotes": "Determined by the annotation agent (Claude licensing-provenance annotator). The brick combines two upstream sources. WikiPathways data is, to the annotator's knowledge, dedicated to the public domain under CC0 1.0 (medium confidence - the wikipathways.org/license page returned HTTP 403 and could not be quoted directly). The primary EU-ToxRisk TempO-Seq gene-expression data is pulled from a Douglas Connect / EdelweissData development API and carries NO license statement in the repository or any reachable source page. Because the most-restrictive component governs and the EU-ToxRisk license is undetermined, the dataset as a whole is classed 'unknown', and commercial use is marked 'prohibited' as the conservative contract-facing verdict for unstated redistribution rights. HUMAN CHECK REQUIRED: establish the actual license/terms for the EU-ToxRisk TempO-Seq data on EdelweissData (EU-ToxRisk was an EU H2020 project, id 681002) and confirm WikiPathways CC0; if EU-ToxRisk turns out to be openly/attribution licensed the class could be raised.",
+  "prov:wasDerivedFrom": [
+    {
+      "@type": "dcat:Dataset",
+      "@id": "https://edelweissdata.com",
+      "dcterms:title": "EU-ToxRisk TempO-Seq gene expression datasets (EdelweissData id d8922983-1724-4ce8-af07-93f290d9c3c2)",
+      "dcterms:license": {
+        "@id": "UNSTATED",
+        "dcterms:title": "No license stated on EdelweissData or in the repository"
+      },
+      "dcat:downloadURL": "https://api.develop.edelweiss.douglasconnect.com",
+      "dcterms:publisher": "Douglas Connect (EdelweissData)"
+    },
+    {
+      "@type": "dcat:Dataset",
+      "@id": "https://www.wikipathways.org",
+      "dcterms:title": "WikiPathways (WikiPathway_2023_Human gene set, via Enrichr)",
+      "dcterms:license": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "dcat:downloadURL": "https://maayanlab.cloud/Enrichr/geneSetLibrary?mode=text&libraryName=WikiPathway_2023_Human",
+      "dcterms:publisher": "WikiPathways"
+    }
+  ]
+}
